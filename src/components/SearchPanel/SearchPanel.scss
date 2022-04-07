@@ -1,0 +1,27 @@
+.search-panel {
+    width: 100%;
+}
+
+.search {
+    position: relative;
+
+    &-input {
+        padding-left: 30px;
+        width: 100%;
+        line-height: 60px;
+        border-radius: 5px;
+        font-size: 24px;
+    }
+
+
+    // &:before {
+    //     content: '';
+    //     display: block;
+    //     position: absolute;
+    //     top: 2px;
+    //     left: 10px;
+    //     background: url('../../../public/Search.svg') center (center / cover) no-repeat;
+    //     width: 25px;
+    //     height: 25px;
+    // }
+}
