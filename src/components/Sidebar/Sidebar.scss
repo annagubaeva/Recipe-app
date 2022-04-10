@@ -22,14 +22,18 @@
     }
 
     &__item {
-        display: block;
 
+        border: none;
+        background-color: inherit;
         color: $light-highlight;
+        text-align: left;
+        width: 100%;
         font-size: 24px;
         line-height: 72px;
 
         &:hover {
             text-decoration: underline;
+            cursor: pointer;
         }
     }
 

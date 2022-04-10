@@ -17,11 +17,11 @@ class RecipesList extends Component {
             loading: true,
             error: false,
             term: '',
-            filter: '',
+            filterDishType: '',
+            filterCategory: '',
+            selectedRecipe: '',
         }
     }
-
-    // TODO: фильтры для low-carbs - проверить, включает ли массив "low-carb", аналогично с приемом пищи
 
     recipeService = new RecipeService();
 
@@ -59,39 +59,15 @@ class RecipesList extends Component {
             return item.title.indexOf(term) > -1
         })
     }
-    
-    filterRec = (items, filter) => {
-        switch (filter) {
-            case "vegan":
-                return items.filter(item => item.health == "vegan");
-            case "low-carb":
-                return items.filter(item => item.dietLabels == "low-Carb");
-            case "breakfast":
-                return items.filter(item => item.mealType == "breakfast");
-            case "lunch":
-                return items.filter(item => {if (item.mealType[0].indexOf("lunch") > -1) return});
-            case "dinner":
-                return items.filter(item => {if (item.mealType[0].indexOf("dinner") > -1) return});
-            case "dessert":
-                return items.filter(item => {if (item.mealType[0].indexOf("teatime") > -1) return});
-            case "appetizers":
-                return items.filter(item => item.mealType = "snacks");
-            default:
-                return items;
-        }
-    }
-
-    onFilterSelect = (filter) => {
-        this.setState({filter});
-    }
 
     renderItems(arr) {
         const items = arr?.map((item) => {
 
             return (
                 <li className="recipe__item"
-                key={item.id}>
-                    <img src={item.image} alt="abyss"/>
+                key={item.id}
+                onClick={() => this.props.onRecipeSelected(item.id)}>
+                    <img src={item.image} alt="image"/>
                     <div className="recipe__name">{item.title}</div>
                     <i className='fa fa-star'></i>
                 </li>
@@ -106,8 +82,8 @@ class RecipesList extends Component {
     }
 
     render() {
-        const {recipes, term, filter, loading, error} = this.state;
-        const visibleData = this.filterRec(this.searchRec(recipes, term), filter);
+        const {recipes, term, loading, error} = this.state;
+        const visibleData = this.props.filterRec(this.props.filterRec(this.searchRec(recipes, term), this.props.filterDishType), this.props.filterCategory);
         const items = this.renderItems(visibleData);
 
         const errorMessage = error ? <ErrorMessage/> : null;
@@ -117,7 +93,7 @@ class RecipesList extends Component {
         return (
             <div>
                 <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                <AppFilter filter={filter} onFilterSelect={this.onFilterSelect}/>
+                <AppFilter filterCategory={this.props.filterCategory} onCategoryFilterSelected={this.props.onCategoryFilterSelected}/>
                 <div className="recipe__list">
                     {errorMessage}
                     {spinner}

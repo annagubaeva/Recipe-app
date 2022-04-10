@@ -1,6 +1,13 @@
 @import "../../style/variables.scss";
 
 .recipe {
+    
+    &__recipe__list {
+        img {
+            margin: 0 auto;
+        }
+    }
+    
     &__content {
         margin-top: 50px;
         column-gap: 76px;
